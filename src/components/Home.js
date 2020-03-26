@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
+import {Helmet} from 'react-helmet';
+import Button from 'react-bootstrap/Button';
 
 import Get from '../actions/Get';
 import Quiz from './Quiz';
 
 export default function Home() {
   const [questions, setQuestions] = useState(null);
+  const [isLoading, setLoading] = useState(false);
 
   function startGame() {
+    setLoading(true);
     Get()
       .then(resp => {
-        console.log(resp.data.results);
+        setLoading(false);
         setQuestions(resp.data.results);
       })
       .catch(error => {
@@ -19,9 +23,16 @@ export default function Home() {
 
   return (
     <>
-    {!questions ? <button onClick={startGame}>Start quiz</button> : <Quiz questions={questions}/>}
-    
-      
+    <Helmet>
+      <title>Home</title>
+    </Helmet>
+    <main>
+      {!questions ? (
+        <Button variant='info' onClick={startGame}>{isLoading ? 'Loading...' : 'Start quiz'}</Button>
+      ) : (
+        <Quiz questions={questions} />
+      )}
+      </main>
     </>
   );
 }
