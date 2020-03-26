@@ -6,8 +6,6 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 
 export default function Quiz({ questions }) {
-  console.log(questions);
-
   return (
     <>
       <Helmet>
@@ -26,7 +24,7 @@ export default function Quiz({ questions }) {
 
           let options = question.incorrect_answers;
           options.push(question.correct_answer);
-          console.log('options ', options);
+          // console.log('options ', options);
 
           const mixedOptions = options.sort(() => Math.random() - 0.5);
           console.log(mixedOptions);
@@ -39,14 +37,14 @@ export default function Quiz({ questions }) {
                   <Card.Body>
                     <Card.Title>{question.question}</Card.Title>
                     {mixedOptions.map((option, index) => {
-                      const uniqKey = `${number}${index}`;
-                      console.log(uniqKey);
+                      const uniqueKey = `${number}${index}`;
+                      console.log('option ', option, 'KEY ', uniqueKey);
                       return (
                         <>
                           <input
-                            key={uniqKey}
+                            key={uniqueKey}
                             type='radio'
-                            // id={uniqKey}
+                            // id={uniqueKey}
                             value={option}
                             name={question.question}
                           />
