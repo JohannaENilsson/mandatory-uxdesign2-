@@ -9,11 +9,13 @@ import Card from 'react-bootstrap/Card';
 
 import PopUp from './PopUp';
 import CheckAnswers from '../actions/CheckAnswers';
+// import entities from '../actions/entities';
 import { updateScore } from '../actions/Store';
 
 export default function Quiz({ questions, restartGame, setQuestions }) {
   const { register, handleSubmit, errors } = useForm();
   const [showPopup, setShowPopup] = useState(false);
+  const [currentScore, handleCurrentScore] = useState(null);
 
   const entities = {
     '&#039;': "'",
@@ -38,6 +40,7 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
 
   const onSubmit = data => {
     const score = CheckAnswers(data, questions);
+    handleCurrentScore(score);
     setShowPopup(true);
     console.log(score);
   };
@@ -52,6 +55,7 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
           <PopUp
             handleCancelPopUp={handleCancelPopUp}
             handleRestartGame={handleRestartGame}
+            currentScore={currentScore}
           />
         ) : null}
         <Row>
