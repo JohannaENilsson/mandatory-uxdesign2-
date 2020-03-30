@@ -2,38 +2,36 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 
-
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 
 import PopUp from './PopUp';
+import { updateScore } from '../actions/Store';
 
-export default function Quiz({ questions,restartGame,setQuestions }) {
-  
+export default function Quiz({ questions, restartGame, setQuestions }) {
   const [submitedAnswers, setsubmitedAnswers] = useState({});
   const { register, handleSubmit, errors } = useForm();
   const [showPopup, setShowPopup] = useState(false);
-  
+
+  // console.log(updateScore);
 
   // startGame(); // när vi trycker på restart
-  function handleCancelPopUp(){
+  function handleCancelPopUp() {
     setShowPopup(false);
     setQuestions(null);
-  };
+  }
 
-  function handleRestartGame(){
-    restartGame()
+  function handleRestartGame() {
+    restartGame();
     setShowPopup(false);
-    
-    
   }
 
   const onSubmit = data => {
     console.log('DATA IS ----> ', data);
     setsubmitedAnswers(data);
-    
+
     setShowPopup(true);
   };
   console.log('RENDERING');
@@ -44,15 +42,18 @@ export default function Quiz({ questions,restartGame,setQuestions }) {
         <title>Quiz</title>
       </Helmet>
       <Container fluid>
-        {showPopup ? <PopUp handleCancelPopUp={handleCancelPopUp} handleRestartGame={handleRestartGame}/> : null}
+        {showPopup ? (
+          <PopUp
+            handleCancelPopUp={handleCancelPopUp}
+            handleRestartGame={handleRestartGame}
+          />
+        ) : null}
         <Row>
           <Col>
             <h1>Quiz</h1>
           </Col>
         </Row>
-        <form onSubmit={handleSubmit(onSubmit)}
-        aria-label="Quiz"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} aria-label='Quiz'>
           {questions.map((question, idx) => {
             const number = (idx += 1);
 
@@ -66,11 +67,12 @@ export default function Quiz({ questions,restartGame,setQuestions }) {
               <fieldset
                 key={number}
                 aria-labelledby={`question_head-${number}`}
-                >
-              <label>Question {number}
-                <legend id={`question_head-${number}`}>
-                  {question.question}
-                </legend>
+              >
+                <label>
+                  Question {number}
+                  <legend id={`question_head-${number}`}>
+                    {question.question}
+                  </legend>
                 </label>
                 {/* <Row> */}
                 {/* <Col> */}
@@ -84,15 +86,16 @@ export default function Quiz({ questions,restartGame,setQuestions }) {
 
                   return (
                     <React.Fragment key={uniqueKey}>
-                      <label htmlFor={`${number}-${option}`}>{option}</label>
-
                       <input
                         name={number}
                         type='radio'
                         id={`${number}-${option}`}
                         value={option}
+                        aria-label={option}
+                        aria-required='true'
                         ref={register({ required: true })}
                       />
+                      <label htmlFor={`${number}-${option}`}>{option}</label>
                     </React.Fragment>
                   );
                   // }
@@ -104,8 +107,8 @@ export default function Quiz({ questions,restartGame,setQuestions }) {
               </fieldset>
             );
           })}
-          <button variant='info' type='submit' >
-          Submit
+          <button variant='info' type='submit'>
+            Submit
           </button>
         </form>
       </Container>
