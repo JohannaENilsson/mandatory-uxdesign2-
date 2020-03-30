@@ -15,9 +15,27 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
   const { register, handleSubmit, errors } = useForm();
   const [showPopup, setShowPopup] = useState(false);
 
-  // console.log(updateScore);
+  function checkAnswers(answers) {
+    console.log('Users answers ', answers);
 
-  // startGame(); // när vi trycker på restart
+    let score = 0;
+    console.log(score);
+
+    for (let i = 0; i < questions.length; i++) {
+      // console.log(questions[i].correct_answer);
+      // console.log(answers[i]);
+      if (questions[i].correct_answer === answers[i]) {
+        console.log('They match');
+        score++;
+      } else {
+        console.log('Wrong');
+        
+      }
+      console.log(score);
+    }
+    console.log(score);
+  }
+
   function handleCancelPopUp() {
     setShowPopup(false);
     setQuestions(null);
@@ -29,12 +47,12 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
   }
 
   const onSubmit = data => {
-    console.log('DATA IS ----> ', data);
+    // console.log('DATA IS ----> ', data);
     setsubmitedAnswers(data);
+    checkAnswers(data);
 
     setShowPopup(true);
   };
-  console.log('RENDERING');
 
   return (
     <>
@@ -55,7 +73,7 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
         </Row>
         <form onSubmit={handleSubmit(onSubmit)} aria-label='Quiz'>
           {questions.map((question, idx) => {
-            const number = (idx += 1);
+            const number = idx;
 
             let options = question.incorrect_answers.concat(
               question.correct_answer
@@ -74,12 +92,6 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
                     {question.question}
                   </legend>
                 </label>
-                {/* <Row> */}
-                {/* <Col> */}
-                {/* <Card className='text-center'> */}
-                {/* <Card.Header><h2>Question number {number}</h2></Card.Header> */}
-                {/* <Card.Body> */}
-                {/* <Card.Title><h2>{question.question}</h2></Card.Title> */}
 
                 {mixedOptions.map((option, index) => {
                   const uniqueKey = `${number}${index}`;
@@ -100,10 +112,6 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
                   );
                   // }
                 })}
-                {/* </Card.Body> */}
-                {/* </Card> */}
-                {/* </Col> */}
-                {/* </Row> */}
               </fieldset>
             );
           })}
