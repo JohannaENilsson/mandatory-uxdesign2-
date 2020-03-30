@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Helmet} from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import Button from 'react-bootstrap/Button';
 
 import Get from '../actions/Get';
@@ -21,17 +21,33 @@ export default function Home() {
       });
   }
 
+  function restartGame() {
+    Get()
+      .then(resp => {
+        setQuestions(resp.data.results);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   return (
     <>
-    <Helmet>
-      <title>Home</title>
-    </Helmet>
-    <main>
-      {!questions ? (
-        <Button variant='info' onClick={startGame}>{isLoading ? 'Loading...' : 'Start quiz'}</Button>
-      ) : (
-        <Quiz questions={questions} />
-      )}
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
+      <main id='maincontent'>
+        {!questions ? (
+          <Button variant='info' onClick={startGame}>
+            {isLoading ? 'Loading...' : 'Start quiz'}
+          </Button>
+        ) : (
+          <Quiz
+            questions={questions}
+            restartGame={restartGame}
+            setQuestions={setQuestions}
+          />
+        )}
       </main>
     </>
   );

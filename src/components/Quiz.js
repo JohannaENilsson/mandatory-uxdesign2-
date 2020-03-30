@@ -10,22 +10,30 @@ import Card from 'react-bootstrap/Card';
 
 import PopUp from './PopUp';
 
-export default function Quiz({ questions }) {
-  const [submitAnswer, setSubmitAnswer] = useState(false);
+export default function Quiz({ questions,restartGame,setQuestions }) {
+  
   const [submitedAnswers, setsubmitedAnswers] = useState({});
   const { register, handleSubmit, errors } = useForm();
   const [showPopup, setShowPopup] = useState(false);
   
 
-
+  // startGame(); // när vi trycker på restart
   function handleCancelPopUp(){
     setShowPopup(false);
+    setQuestions(null);
   };
+
+  function handleRestartGame(){
+    restartGame()
+    setShowPopup(false);
+    
+    
+  }
 
   const onSubmit = data => {
     console.log('DATA IS ----> ', data);
     setsubmitedAnswers(data);
-    setSubmitAnswer(true);
+    
     setShowPopup(true);
   };
   console.log('RENDERING');
@@ -36,7 +44,7 @@ export default function Quiz({ questions }) {
         <title>Quiz</title>
       </Helmet>
       <Container fluid>
-        {showPopup ? <PopUp handleCancelPopUp={handleCancelPopUp}/> : null}
+        {showPopup ? <PopUp handleCancelPopUp={handleCancelPopUp} handleRestartGame={handleRestartGame}/> : null}
         <Row>
           <Col>
             <h1>Quiz</h1>
@@ -97,7 +105,7 @@ export default function Quiz({ questions }) {
             );
           })}
           <button variant='info' type='submit' >
-            {submitAnswer ? 'Checking...' : 'Submit'}
+          Submit
           </button>
         </form>
       </Container>

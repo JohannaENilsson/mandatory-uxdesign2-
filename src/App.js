@@ -1,7 +1,9 @@
 import React, { Suspense, lazy } from 'react';
 import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
 
-import './App.css';
+import './styling/App.css';
+import './styling/PopUp.css';
+
 import Nav from './components/Nav';
 const Home = React.lazy(() => import('./components/Home'));
 const About = React.lazy(() => import('./components/About'));
