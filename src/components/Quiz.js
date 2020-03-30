@@ -8,33 +8,23 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 
 import PopUp from './PopUp';
+import CheckAnswers from '../actions/CheckAnswers';
 import { updateScore } from '../actions/Store';
 
 export default function Quiz({ questions, restartGame, setQuestions }) {
-  const [submitedAnswers, setsubmitedAnswers] = useState({});
   const { register, handleSubmit, errors } = useForm();
   const [showPopup, setShowPopup] = useState(false);
 
-  function checkAnswers(answers) {
-    console.log('Users answers ', answers);
-
-    let score = 0;
-    console.log(score);
-
-    for (let i = 0; i < questions.length; i++) {
-      // console.log(questions[i].correct_answer);
-      // console.log(answers[i]);
-      if (questions[i].correct_answer === answers[i]) {
-        console.log('They match');
-        score++;
-      } else {
-        console.log('Wrong');
-        
-      }
-      console.log(score);
-    }
-    console.log(score);
-  }
+  const entities = {
+    '&#039;': "'",
+    '&quot;': '"',
+    '&ldquo;': '“',
+    '&rdquo;': '”',
+    '&ntilde;': 'ñ',
+    '&eacute;': 'é',
+    '&amp;': '&',
+    '&uuml;': 'ü'
+  };
 
   function handleCancelPopUp() {
     setShowPopup(false);
@@ -47,11 +37,9 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
   }
 
   const onSubmit = data => {
-    // console.log('DATA IS ----> ', data);
-    setsubmitedAnswers(data);
-    checkAnswers(data);
-
+    const score = CheckAnswers(data, questions);
     setShowPopup(true);
+    console.log(score);
   };
 
   return (
@@ -89,25 +77,35 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
                 <label>
                   Question {number}
                   <legend id={`question_head-${number}`}>
-                    {question.question}
+                    {question.question.replace(
+                      /&#?\w+;/g,
+                      match => entities[match]
+                    )}
                   </legend>
                 </label>
 
                 {mixedOptions.map((option, index) => {
                   const uniqueKey = `${number}${index}`;
 
+                  let fixedOption = option.replace(
+                    /&#?\w+;/g,
+                    match => entities[match]
+                  );
+
                   return (
                     <React.Fragment key={uniqueKey}>
                       <input
                         name={number}
                         type='radio'
-                        id={`${number}-${option}`}
-                        value={option}
-                        aria-label={option}
+                        id={`${number}-${fixedOption}`}
+                        value={fixedOption}
+                        aria-label={fixedOption}
                         aria-required='true'
                         ref={register({ required: true })}
                       />
-                      <label htmlFor={`${number}-${option}`}>{option}</label>
+                      <label htmlFor={`${number}-${fixedOption}`}>
+                        {fixedOption}
+                      </label>
                     </React.Fragment>
                   );
                   // }
