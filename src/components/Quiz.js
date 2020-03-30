@@ -2,21 +2,31 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 
-// import RenderQuiz from './RenderQuiz';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 
+import PopUp from './PopUp';
+
 export default function Quiz({ questions }) {
   const [submitAnswer, setSubmitAnswer] = useState(false);
   const [submitedAnswers, setsubmitedAnswers] = useState({});
   const { register, handleSubmit, errors } = useForm();
+  const [showPopup, setShowPopup] = useState(false);
+  
+
+
+  function handleCancelPopUp(){
+    setShowPopup(false);
+  };
+
   const onSubmit = data => {
     console.log('DATA IS ----> ', data);
     setsubmitedAnswers(data);
     setSubmitAnswer(true);
+    setShowPopup(true);
   };
   console.log('RENDERING');
 
@@ -26,6 +36,7 @@ export default function Quiz({ questions }) {
         <title>Quiz</title>
       </Helmet>
       <Container fluid>
+        {showPopup ? <PopUp handleCancelPopUp={handleCancelPopUp}/> : null}
         <Row>
           <Col>
             <h1>Quiz</h1>
@@ -48,10 +59,11 @@ export default function Quiz({ questions }) {
                 key={number}
                 aria-labelledby={`question_head-${number}`}
                 >
-              
+              <label>Question {number}
                 <legend id={`question_head-${number}`}>
                   {question.question}
                 </legend>
+                </label>
                 {/* <Row> */}
                 {/* <Col> */}
                 {/* <Card className='text-center'> */}
@@ -84,7 +96,7 @@ export default function Quiz({ questions }) {
               </fieldset>
             );
           })}
-          <button variant='info' type='submit'>
+          <button variant='info' type='submit' >
             {submitAnswer ? 'Checking...' : 'Submit'}
           </button>
         </form>
