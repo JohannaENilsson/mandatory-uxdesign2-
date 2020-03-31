@@ -1,11 +1,13 @@
 .App {
+  height: 100vh;
+  width: 100vw;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
 
 
@@ -20,6 +22,21 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  background-color: gray;
+  width: 65%;
+  height: 90%;
 }
+
+form{
+  width: 80%;
+}
+
+/* cadetblue */

@@ -8,8 +8,11 @@ import Quiz from './Quiz';
 export default function Home() {
   const [questions, setQuestions] = useState(null);
   const [isLoading, setLoading] = useState(false);
+  console.log('load Doom');
+  console.log(questions);
 
   function startGame() {
+    setQuestions(null);
     setLoading(true);
     Get()
       .then(resp => {
@@ -33,9 +36,7 @@ export default function Home() {
 
   return (
     <>
-      <Helmet>
-        <title>Home</title>
-      </Helmet>
+      <Helmet>{!questions ? <title>Home</title> : <title>Quiz</title>}</Helmet>
       <main id='maincontent'>
         {!questions ? (
           <Button variant='info' onClick={startGame}>

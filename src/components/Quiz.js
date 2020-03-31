@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
-import { useForm } from 'react-hook-form';
+import React, { useState, useEffect } from 'react';
+
+import { useForm, Controller } from 'react-hook-form';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 import PopUp from './PopUp';
 import CheckAnswers from '../actions/CheckAnswers';
@@ -13,10 +14,10 @@ import CheckAnswers from '../actions/CheckAnswers';
 import { updateScore } from '../actions/Store';
 
 export default function Quiz({ questions, restartGame, setQuestions }) {
-  const { register, handleSubmit, errors } = useForm();
-  const [showPopup, setShowPopup] = useState(false);
+  const { register, handleSubmit, errors, unregister } = useForm();
+  const [showModal, setShowModal] = useState(false);
   const [currentScore, handleCurrentScore] = useState(null);
-
+  console.log('Quiz');
   const entities = {
     '&#039;': "'",
     '&quot;': '"',
@@ -28,65 +29,57 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
     '&uuml;': 'ü'
   };
 
-  function handleCancelPopUp() {
-    setShowPopup(false);
+  function deactivateModal() {
+    setShowModal(false);
     setQuestions(null);
   }
 
   function handleRestartGame() {
     restartGame();
-    setShowPopup(false);
+    setShowModal(false);
   }
 
   const onSubmit = data => {
     const score = CheckAnswers(data, questions);
     handleCurrentScore(score);
-    setShowPopup(true);
+    updateScore(score);
+    setShowModal(true);
     console.log(score);
   };
 
   return (
     <>
-      <Helmet>
-        <title>Quiz</title>
-      </Helmet>
-      <Container fluid>
-        {showPopup ? (
-          <PopUp
-            handleCancelPopUp={handleCancelPopUp}
-            handleRestartGame={handleRestartGame}
-            currentScore={currentScore}
-          />
-        ) : null}
-        <Row>
-          <Col>
-            <h1>Quiz</h1>
-          </Col>
-        </Row>
-        <form onSubmit={handleSubmit(onSubmit)} aria-label='Quiz'>
-          {questions.map((question, idx) => {
-            const number = idx;
+      {showModal ? (
+        <PopUp
+          deactivateModal={deactivateModal}
+          handleRestartGame={handleRestartGame}
+          currentScore={currentScore}
+        />
+      ) : null}
 
-            let options = question.incorrect_answers.concat(
-              question.correct_answer
-            );
+      
 
-            const mixedOptions = options.sort(() => Math.random() - 0.5);
+      <form onSubmit={handleSubmit(onSubmit)} aria-label='Quiz'>
+        {questions.map((question, idx) => {
+          const number = idx += 1;
 
-            return (
-              <fieldset
-                key={number}
-                aria-labelledby={`question_head-${number}`}
-              >
-                <label>
-                  Question {number}
-                  <legend id={`question_head-${number}`}>
-                    {question.question.replace(
-                      /&#?\w+;/g,
-                      match => entities[match]
-                    )}
-                  </legend>
-                </label>
+          let options = question.incorrect_answers.concat(
+            question.correct_answer
+          );
+
+          // const mixedOptions = options.sort(() => Math.random() - 0.5);
+          const mixedOptions = options;
+
+          return (
+            <Card key={number} className='Card'>
+              <fieldset aria-labelledby={`question_head-${number}`}>
+                <h2> Question {number} </h2>
+                <h3 id={`question_head-${number}`}>
+                  {question.question.replace(
+                    /&#?\w+;/g,
+                    match => entities[match]
+                  )}
+                </h3>
 
                 {mixedOptions.map((option, index) => {
                   const uniqueKey = `${number}${index}`;
@@ -115,13 +108,13 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
                   // }
                 })}
               </fieldset>
-            );
-          })}
-          <button variant='info' type='submit'>
-            Submit
-          </button>
-        </form>
-      </Container>
+            </Card>
+          );
+        })}
+        <Button variant='info' type='submit'>
+          Submit
+        </Button>
+      </form>
     </>
   );
 }
