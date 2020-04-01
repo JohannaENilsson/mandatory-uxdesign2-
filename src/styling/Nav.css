@@ -1,5 +1,5 @@
 .Nav{
-    background-color: greenyellow;
+    background-color: #282c34;
     position: absolute;
     top: 0;
     left: 0;
@@ -16,23 +16,22 @@
 
 .Nav a {
     margin: 25% 0 10px 25%;
+    color: #C9E3E3;
+    padding: 15px 20px;
+}
+
+.Nav a:focus{
+    background-color: #C9E3E3;
+    color: #282c34;
 }
 
 
-@media (max-width: 500px){
+@media (max-width: 500px){  
     .Nav{
-        background-color: greenyellow;
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100vh;
+      
         width: 35vw;
     
-        display: flex;
-        flex-direction: column;
-        
-    
-        padding: 30px 30 70px  0;
+
         transition: all 1s ease-in-out;
     }
 

@@ -1,20 +1,28 @@
+body{
+  background-color: whitesmoke;
+}
+
 .App {
   height: 100vh;
   width: 100vw;
-  /* text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; */
+  
 }
 
-
+footer{
+  height: 30px;
+  width: 100%;
+  background-color: #282c34;
+  color: #C9E3E3;
+  text-align: center;
+  line-height: 30px;
+  font-weight: lighter;
+}
 header {
   background-color: #282c34;
   height: 10vh;
+  width: 100%;
    
-  /* font-size: calc(10px + 2vmin); */
-  color: white;
+  color: #C9E3E3;
   text-align: center;
 }
 
@@ -33,13 +41,17 @@ header {
 .header__icon{
   margin-left: 10%;
   font-size: 3em;
-  color: aqua;
+  color: #C9E3E3;
 }
 
 .header__title{
   display: inline;
-  background-color: greenyellow;
+  /* background-color: #C9E3E3; */
   line-height: 10vh;
+}
+
+h2{
+  background-color: #C9E3E3;
 }
 
 
@@ -47,10 +59,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  
-  
-  height: 90vh;
+  height: 83.5%;
 }
 
 form{
@@ -63,7 +72,6 @@ form{
 
 .Card{
   margin: 10px 0 10px 0;
-  max-width: 50%;
+  width: 50%;
 }
 
-/* cadetblue */

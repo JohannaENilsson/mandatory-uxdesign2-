@@ -6,13 +6,14 @@ import './styling/Nav.css';
 
 import Header from './components/Header';
 import Nav from './components/Nav';
+// import Footer from './components/Footer';
 const Home = React.lazy(() => import('./components/Home'));
 const About = React.lazy(() => import('./components/About'));
 const Stats = React.lazy(() => import('./components/Stats'));
 
 function App() {
   const [openMenu, setOpenMenu] = useState(false);
-  console.log(openMenu);
+  
   return (
     <div className='App'>
       <Suspense
@@ -31,8 +32,11 @@ function App() {
           <Route exact path='/' component={Home} />
           <Route path='/about' component={About} />
           <Route path='/stats' component={Stats} />
+          {/* <Footer /> */}
         </Router>
       </Suspense>
+
+      
     </div>
   );
 }

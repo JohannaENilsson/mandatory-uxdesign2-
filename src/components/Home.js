@@ -8,7 +8,7 @@ import Quiz from './Quiz';
 export default function Home() {
   const [questions, setQuestions] = useState(null);
   const [isLoading, setLoading] = useState(false);
-  console.log('load Doom');
+  // console.log('load Doom');
   
 
   function startGame() {

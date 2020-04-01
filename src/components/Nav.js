@@ -6,7 +6,7 @@ export default function Nav({ OnClickMask }) {
 
   return (
     <AriaModal
-      titleText='demo one'
+      titleText='menu'
       onExit={OnClickMask}
       initialFocus='#demo-one-deactivate'
       underlayStyle={{ paddingTop: '2em' }}
