@@ -10,6 +10,7 @@ export const entities = {
 };
 
 export const defaultValues = {
+  '0': '',
   '1': '',
   '2': '',
   '3': '',
@@ -19,5 +20,5 @@ export const defaultValues = {
   '7': '',
   '8': '',
   '9': '',
-  '10': ''
+  
 };

@@ -2,22 +2,23 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Button from 'react-bootstrap/Button';
 
-import Get from '../actions/Get';
+import {GetAPI} from '../actions/Funcs';
 import Quiz from './Quiz';
 
 export default function Home() {
-  const [questions, setQuestions] = useState(null);
+  const [apiData, handleApiData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   // console.log('load Doom');
   
 
   function startGame() {
-    setQuestions(null);
+    handleApiData(null);
     setLoading(true);
-    Get()
+    GetAPI()
       .then(resp => {
         setLoading(false);
-        setQuestions(resp.data.results);
+        handleApiData(resp.data.results);
+        console.log(resp.data.results);
       })
       .catch(error => {
         console.log(error);
@@ -25,9 +26,9 @@ export default function Home() {
   }
 
   function restartGame() {
-    Get()
+    GetAPI()
       .then(resp => {
-        setQuestions(resp.data.results);
+        handleApiData(resp.data.results);
       })
       .catch(error => {
         console.log(error);
@@ -36,17 +37,17 @@ export default function Home() {
 
   return (
     <>
-      <Helmet>{!questions ? <title>Home</title> : <title>Quiz</title>}</Helmet>
+      <Helmet>{!apiData ? <title>Home</title> : <title>Quiz</title>}</Helmet>
       <main id='maincontent'>
-        {!questions ? (
+        {!apiData ? (
           <Button variant='info' onClick={startGame}>
             {isLoading ? 'Loading...' : 'Start quiz'}
           </Button>
         ) : (
           <Quiz
-            questions={questions}
+            apiData={apiData}
             restartGame={restartGame}
-            setQuestions={setQuestions}
+            handleApiData={handleApiData}
           />
         )}
       </main>
