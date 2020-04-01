@@ -10,38 +10,26 @@ import Button from 'react-bootstrap/Button';
 
 import PopUp from './PopUp';
 import CheckAnswers from '../actions/CheckAnswers';
-// import entities from '../actions/entities';
+import { entities, defaultValues } from '../actions/Utils';
 import { updateScore } from '../actions/Store';
 
 export default function Quiz({ questions, restartGame, setQuestions }) {
-  const { register, handleSubmit, errors, unregister } = useForm();
+  const { register, handleSubmit, reset } = useForm({ defaultValues });
   const [showModal, setShowModal] = useState(false);
   const [currentScore, handleCurrentScore] = useState(null);
-  const [triva, handleTriva] = useState(null);
-  console.log('Quiz');
-  const entities = {
-    '&#039;': "'",
-    '&quot;': '"',
-    '&ldquo;': '“',
-    '&rdquo;': '”',
-    '&ntilde;': 'ñ',
-    '&eacute;': 'é',
-    '&amp;': '&',
-    '&uuml;': 'ü'
-  };
-  console.log(questions);
+  const [trivia, handleTrivia] = useState(null);
+
   useEffect(() => {
-    const shuffle = questions.map((option, idx) => {
+    const shuffle = questions.map(option => {
       const options = option.incorrect_answers.concat(option.correct_answer);
       const mixedOptions = options.sort(() => Math.random() - 0.5);
       const question = option.question;
       return { question, mixedOptions };
     });
 
-    return handleTriva(shuffle);
+    return handleTrivia(shuffle);
   }, [questions]);
 
-  console.log('state', triva);
   function deactivateModal() {
     setShowModal(false);
     setQuestions(null);
@@ -49,11 +37,13 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
 
   function handleRestartGame() {
     restartGame();
+    reset(defaultValues);
     setShowModal(false);
   }
 
   const onSubmit = data => {
     const score = CheckAnswers(data, questions);
+    console.log(data);
     handleCurrentScore(score);
     updateScore(score);
     setShowModal(true);
@@ -70,9 +60,9 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
         />
       ) : null}
 
-      {triva ? (
+      {trivia ? (
         <form onSubmit={handleSubmit(onSubmit)} aria-label='Quiz'>
-          {triva.map((question, idx) => {
+          {trivia.map((question, idx) => {
             const number = (idx += 1);
 
             const mixedOptions = question.mixedOptions;
@@ -122,9 +112,7 @@ export default function Quiz({ questions, restartGame, setQuestions }) {
             Submit
           </Button>
         </form>
-      ) : (
-        null
-      )}
+      ) : null}
     </>
   );
 }
