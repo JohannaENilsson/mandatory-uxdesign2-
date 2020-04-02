@@ -91,7 +91,6 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
                     /&#?\w+;/g,
                     match => entities[match]
                   );
-
                   return (
                     <React.Fragment key={uniqueKey}>
                       <input
@@ -108,7 +107,6 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
                       </label>
                     </React.Fragment>
                   );
-                  // }
                 })}
               </fieldset>
             );

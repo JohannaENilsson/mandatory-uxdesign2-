@@ -17,14 +17,14 @@ export default function PopUp({
       <div id='demo-one-modal' className='modal' style={{ display: 'block' }}>
         <section className='popUp'>
           <h1>Play again?</h1>
-          <p id='demo-one-deactivate'>
+          <p>
             you got {gameResults} answers right of{' '}
             {amountOfQuestions.length}
           </p>
           <button className='startGame' onClick={deactivateModal}>
             Close
           </button>
-          <button className='startGame' onClick={handleRestartGame}>
+          <button className='startGame' onClick={handleRestartGame} id='demo-one-deactivate'>
             Replay
           </button>
         </section>

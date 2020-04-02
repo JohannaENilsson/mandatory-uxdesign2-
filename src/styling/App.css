@@ -72,7 +72,7 @@ main {
     background-color: #282c34;
     color: #C9E3E3;
     height: 50px;
-    width: 150px;
+    min-width: 150px;
     font-weight: bolder;
     font-size: 1.5rem;
     border-radius: 7px;
@@ -161,7 +161,7 @@ input[type="radio"]:hover+label {
 input[type="radio"]:checked+label {
     background-color: #282c34;
     color: #C9E3E3;
-    font-weight: 700;
+    font-weight: 400;
 }
 
 .popUp{
