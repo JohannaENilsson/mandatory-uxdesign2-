@@ -18,7 +18,7 @@ export default function PopUp({
         <section className='popUp'>
           <h1>Play again?</h1>
           <p id='demo-one-deactivate'>
-            you got {gameResults} answers right out of{' '}
+            you got {gameResults} answers right of{' '}
             {amountOfQuestions.length}
           </p>
           <button className='startGame' onClick={deactivateModal}>
