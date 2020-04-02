@@ -1,21 +1,15 @@
 import { BehaviorSubject } from 'rxjs';
 
-// export const score$ = new BehaviorSubject(localStorage.getItem('score'));
-
-// export function updateScore(score) {
-//   score$.next(score);
-//   localStorage.setItem('score', score);
-// }
-
-
-export const score$ = new BehaviorSubject(JSON.parse(localStorage.getItem("score")));
+export const score$ = new BehaviorSubject(
+  JSON.parse(localStorage.getItem('score'))
+);
 
 export function updateScore(score) {
   if (score) {
     score$.next(score);
-    localStorage.setItem("score", JSON.stringify(score));
+    localStorage.setItem('score', JSON.stringify(score));
   } else {
     score$.next(score);
-    localStorage.removeItem("score");
+    localStorage.removeItem('score');
   }
 }

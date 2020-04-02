@@ -12,8 +12,6 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
   const [showModal, setShowModal] = useState(false);
   const [gameResults, setGameResults] = useState(null);
   const [trivia, handleTrivia] = useState(null);
-  console.log(apiData);
-  console.log(score$);
 
   useEffect(() => {
     const shuffle = apiData.map(data => {
@@ -39,12 +37,11 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
 
   const onSubmit = data => {
     const score = CheckAnswers(data, apiData);
-    console.log('submit ', data, apiData);
 
     setGameResults(score);
 
     let newResult = { ...score$.value };
-    console.log(newResult);
+
     newResult.gamesPlayed++;
     newResult.correctAnswers += score;
     newResult.incorrectAnswers += apiData.length - score;
@@ -57,7 +54,6 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
 
     updateScore(newResult);
     setShowModal(true);
-    console.log(newResult);
   };
 
   return (
@@ -104,7 +100,6 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
                         id={`${idx}${fixedOption}`}
                         value={option}
                         required
-                        // aria-label={fixedOption}
                         aria-required='true'
                         ref={register({ required: true })}
                       />

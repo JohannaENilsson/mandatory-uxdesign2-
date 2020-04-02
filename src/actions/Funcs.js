@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function GetAPI() {
-  return axios.get('https://opentdb.com/api.php?amount=2');
+  return axios.get('https://opentdb.com/api.php?amount=10');
 }
 
 export function CheckAnswers(answers, questions) {

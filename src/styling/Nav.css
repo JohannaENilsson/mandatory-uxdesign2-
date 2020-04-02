@@ -22,18 +22,29 @@
     color: #C9E3E3;
     padding: 15px 20px;
     border-radius: 7px 0 0 7px;
+    transition: all 0.5s ease;
 }
 
 .Nav a:focus{
     background-color: #C9E3E3;
     color: #282c34;
     font-weight: 700;
+    transition: all 0.5s ease;
 }
 
 .Nav a:active{
     background-color: #C9E3E3;
     color: #282c34;
     font-weight: 700;
+    transition: all 0.5s ease;
+}
+
+.Nav a:hover{
+    background-color: #C9E3E3;
+    color: #282c34;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.5s ease;
 }
 
 @media (max-width: 500px){  

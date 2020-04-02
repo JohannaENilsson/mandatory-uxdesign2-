@@ -32,24 +32,32 @@ header {
     width: 10vw;
     text-align: left;
     background-color: #282c34;
+    color: #C9E3E3;
     border: none;
+    transition: all 0.5s ease;
 }
+
+#header__button:hover , .header__icon:hover {
+    transform: scale(0.7);
+    transition: all 0.5s ease;
+
+} 
 
 .header__icon {
     margin-left: 10%;
     font-size: 3em;
-    color: #C9E3E3;
+    /* color: #C9E3E3; */
 }
 
 .header__title {
     display: inline;
-    /* background-color: #C9E3E3; */
     line-height: 10vh;
 }
 
-h1 {
+.header__h1 {
     font-family: 'Playfair Display', serif;
     color: #C9E3E3;
+    font-weight: 700;
 }
 
 main {
@@ -155,23 +163,45 @@ input[type="radio"]:checked+label {
     font-weight: 700;
 }
 
-.modal{
-  /* background-color: red; */
-}
 .popUp{
-  display: flex;
-  /* flex-direction: column; */
-  align-content: center;
-  /* justify-content: center; */
+  width: 400px;
 
   position: relative;
-  left: 20%;
+  margin-left: -200px;
+  left: 50%;
+  right: 50%;
   top:25%;
   background-color: whitesmoke;
+}
+
+.popUp h1 {
+    font-family: 'Playfair Display', serif;
+    color: #282c34;
+    font-weight: 700;
+}
+
+.popUp button{
+margin: 0 3.3% 0 3.3%;
+
 }
 
 @media (max-width:950px) {
   fieldset {
         min-width: 310px;
+    }
+}
+
+@media (max-width:450px) {
+    .popUp{
+        width: 300px;
+        margin-left: -150px;
+    }
+    
+    .popUp button{
+    margin: 0 3.3% 0 3.3%;
+    height: 40px;
+    width: 100px;
+    font-size: 1.3rem;
+    
     }
 }

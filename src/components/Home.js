@@ -15,7 +15,6 @@ export default function Home() {
       .then(resp => {
         setLoading(false);
         handleApiData(resp.data.results);
-        console.log(resp.data.results);
       })
       .catch(error => {
         console.log(error);
