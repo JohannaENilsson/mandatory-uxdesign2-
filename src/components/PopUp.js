@@ -6,8 +6,9 @@ import Button from 'react-bootstrap/Button';
 
 export default function PopUp({
   handleRestartGame,
-  currentScore,
-  deactivateModal
+  gameResults,
+  deactivateModal,
+  amountOfQuestions
 }) {
   return (
     <AriaModal
@@ -18,12 +19,12 @@ export default function PopUp({
     >
       <div id='demo-one-modal' className='modal' style={{ display: 'block' }}>
         
-            <Card id='modal-body'>
+          <section className='popUp'>
           <h1>Pop-Up</h1>
-          <p >you got {currentScore} answers right out of 10</p>
-          <Button variant='info'  onClick={deactivateModal}>Close</Button>
-          <Button variant='info' onClick={handleRestartGame} id='demo-one-deactivate'>Play again</Button>
-          </Card>
+  <p >you got {gameResults.score} answers right out of {amountOfQuestions.length}</p>
+          <button className='startGame'  onClick={deactivateModal}>Close</button>
+          <button className='startGame' onClick={handleRestartGame} id='demo-one-deactivate'>Play again</button>
+          </section>
           
       </div>
     </AriaModal>

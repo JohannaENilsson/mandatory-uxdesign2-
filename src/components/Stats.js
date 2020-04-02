@@ -1,39 +1,38 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { score$ } from '../actions/Store';
+import { updateScore, score$ } from '../actions/Store';
 
-import Card from 'react-bootstrap/Card';
 
 export default function Stats() {
+
+  if(!score$.value){
+    updateScore({
+      gamesPlayed: 0,
+      correctAnswers: 0,
+      incorrectAnswers: 0,
+      correctPercentage: 0 +'%'
+    });
+  }
   return (
     <>
       <Helmet>
         <title>Stats</title>{' '}
       </Helmet>
       <main>
-        <Card className='Card'>
+        <section>
           <h2>Stats</h2>
-          <p>
-            Macaroon gummi bears jujubes gummi bears halvah marshmallow wafer
-            muffin. Bear claw chocolate I love cheesecake cake donut lollipop
-            wafer jujubes. Chupa chups candy I love chocolate bar. Biscuit
-            powder biscuit I love soufflé marzipan I love.
+          <p>Times played: {score$.value.gamesPlayed}
           </p>
 
-          <p>
-            Macaroon gummi bears jujubes gummi bears halvah marshmallow wafer
-            muffin. Bear claw chocolate I love cheesecake cake donut lollipop
-            wafer jujubes. Chupa chups candy I love chocolate bar. Biscuit
-            powder biscuit I love soufflé marzipan I love.
+          <p>Correct answers: 
+          {score$.value.correctAnswers}
           </p>
 
-          <p>
-            Macaroon gummi bears jujubes gummi bears halvah marshmallow wafer
-            muffin. Bear claw chocolate I love cheesecake cake donut lollipop
-            wafer jujubes. Chupa chups candy I love chocolate bar. Biscuit
-            powder biscuit I love soufflé marzipan I love.
+          <p>Incorrect answers: {score$.value.incorrectAnswers}
           </p>
-        </Card>
+          <p>Score: {score$.value.correctPercentage}
+          </p>
+        </section>
       </main>
     </>
   );

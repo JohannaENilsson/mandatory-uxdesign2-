@@ -37,7 +37,7 @@ export default function Home() {
       <Helmet>{!apiData ? <title>Home</title> : <title>Quiz</title>}</Helmet>
       <main id='maincontent'>
         {!apiData ? (
-          <button id='startGame' onClick={startGame}>
+          <button className='startGame start' onClick={startGame}>
             {isLoading ? 'Loading...' : 'Start quiz'}
           </button>
         ) : (

@@ -59,7 +59,7 @@ main {
     height: 83.5%;
 }
 
-#startGame {
+.startGame {
     outline: none;
     background-color: #282c34;
     color: #C9E3E3;
@@ -69,13 +69,16 @@ main {
     font-size: 1.5rem;
     border-radius: 7px;
     border: none;
-    margin-top: calc(5 * var(--rhythm));
     box-shadow: 0 0 6px 6px #C9E3E3;
     transition: all 0.5s ease;
 }
 
-#startGame:focus,
-#startGame:hover {
+.start{
+  margin-top: calc(5 * var(--rhythm));
+}
+
+.startGame:focus,
+.startGame:hover {
     background-color: #C9E3E3;
     color: #282c34;
     transition: all 0.5s ease;
@@ -84,19 +87,22 @@ main {
 form {
     width: 80%;
     padding: var(--rhythm);
-    /* background-color: yellow; */
+    
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.Card {
-    margin: var(--rhythm);
-    /* padding: calc(0.5 * var(--rhythm)); */
-    width: 50%;
+section {
+  padding: var(--rhythm);
+  margin: var(--rhythm);
+  border: 2px solid #282c34;
+  border-radius: 7px;
+  width: 50%;
 }
 
-.Card h2 {
+
+h2 {
     margin-block-start: -10px;
     margin-block-end: var(--rhythm);
     font-family: 'Playfair Display', serif;
@@ -105,7 +111,14 @@ form {
 
 fieldset {
     padding: var(--rhythm);
-    /* background-color: red; */
+    margin: var(--rhythm);
+    border: 2px solid #282c34;
+    border-radius: 7px;
+    width: 50%;
+}
+
+fieldset:focus-within{
+  border: 2px solid #C9E3E3;
 }
 
 legend {
@@ -123,7 +136,7 @@ input[type="radio"]+label {
     display: block;
     cursor: pointer;
     height: auto;
-    width: 320px;
+    width: 100%;
     border-radius: 7px;
     padding-left: calc(0.5 * var(--rhythm));
 }
@@ -142,8 +155,23 @@ input[type="radio"]:checked+label {
     font-weight: 700;
 }
 
+.modal{
+  /* background-color: red; */
+}
+.popUp{
+  display: flex;
+  /* flex-direction: column; */
+  align-content: center;
+  /* justify-content: center; */
+
+  position: relative;
+  left: 20%;
+  top:25%;
+  background-color: whitesmoke;
+}
+
 @media (max-width:950px) {
-    .card {
-        width: 320px;
+  fieldset {
+        min-width: 310px;
     }
 }

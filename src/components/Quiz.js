@@ -5,13 +5,15 @@ import { useForm } from 'react-hook-form';
 import PopUp from './PopUp';
 import { CheckAnswers } from '../actions/Funcs';
 import { entities, defaultValues } from '../actions/Utils';
-import { updateScore } from '../actions/Store';
+import { updateScore, score$ } from '../actions/Store';
 
 export default function Quiz({ apiData, restartGame, handleApiData }) {
   const { register, handleSubmit, reset } = useForm({ defaultValues });
   const [showModal, setShowModal] = useState(false);
-  const [currentScore, handleCurrentScore] = useState(null);
+  const [gameResults, setGameResults] = useState(null);
   const [trivia, handleTrivia] = useState(null);
+  console.log(apiData);
+  console.log(score$);
 
   useEffect(() => {
     const shuffle = apiData.map(data => {
@@ -38,10 +40,24 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
   const onSubmit = data => {
     const score = CheckAnswers(data, apiData);
     console.log('submit ', data, apiData);
-    handleCurrentScore(score);
-    updateScore(score);
+
+    setGameResults(score);
+
+    let newResult = { ...score$.value };
+    console.log(newResult);
+    newResult.gamesPlayed++;
+    newResult.correctAnswers += score;
+    newResult.incorrectAnswers += apiData.length - score;
+    newResult.correctPercentage =
+      Math.round(
+        (newResult.correctAnswers /
+          (newResult.correctAnswers + newResult.incorrectAnswers)) *
+          100
+      ) + '%';
+
+    updateScore(newResult);
     setShowModal(true);
-    console.log(score);
+    console.log(newResult);
   };
 
   return (
@@ -50,7 +66,8 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
         <PopUp
           deactivateModal={deactivateModal}
           handleRestartGame={handleRestartGame}
-          currentScore={currentScore}
+          gameResults={gameResults}
+          amountOfQuestions={apiData}
         />
       ) : null}
 
@@ -62,53 +79,46 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
             const options = question.mixedOptions;
 
             return (
-              <div
-                key={idx}
-                className='Card'
-                role='group'
-                aria-label='question container'
-              >
-                <fieldset aria-label={`question_head-${idx}`}>
-                  <legend> Question {number} </legend>
-                  <h2>
-                    {/* id={`question_head-${idx}`} */}
-                    {question.question.replace(
-                      /&#?\w+;/g,
-                      match => entities[match]
-                    )}
-                  </h2>
+              <fieldset aria-label={`question_head-${idx}`} key={idx}>
+                <legend> Question {number} </legend>
+                <h2>
+                  {question.question.replace(
+                    /&#?\w+;/g,
+                    match => entities[match]
+                  )}
+                </h2>
 
-                  {options.map((option, index) => {
-                    const uniqueKey = `${idx}${index}`;
+                {options.map((option, index) => {
+                  const uniqueKey = `${idx}${index}`;
 
-                    let fixedOption = option.replace(
-                      /&#?\w+;/g,
-                      match => entities[match]
-                    );
+                  let fixedOption = option.replace(
+                    /&#?\w+;/g,
+                    match => entities[match]
+                  );
 
-                    return (
-                      <React.Fragment key={uniqueKey}>
-                        <input
-                          name={idx}
-                          type='radio'
-                          id={`${idx}${fixedOption}`}
-                          value={option}
-                          // aria-label={fixedOption}
-                          aria-required='true'
-                          ref={register({ required: true })}
-                        />
-                        <label htmlFor={`${idx}${fixedOption}`}>
-                          {fixedOption}
-                        </label>
-                      </React.Fragment>
-                    );
-                    // }
-                  })}
-                </fieldset>
-              </div>
+                  return (
+                    <React.Fragment key={uniqueKey}>
+                      <input
+                        name={idx}
+                        type='radio'
+                        id={`${idx}${fixedOption}`}
+                        value={option}
+                        required
+                        // aria-label={fixedOption}
+                        aria-required='true'
+                        ref={register({ required: true })}
+                      />
+                      <label htmlFor={`${idx}${fixedOption}`}>
+                        {fixedOption}
+                      </label>
+                    </React.Fragment>
+                  );
+                  // }
+                })}
+              </fieldset>
             );
           })}
-          <button id='startGame' type='submit' aria-label='submit quiz'>
+          <button className='startGame' type='submit' aria-label='submit quiz'>
             Submit
           </button>
         </form>

@@ -10,7 +10,7 @@ export default function About() {
         <title>About</title>{' '}
       </Helmet>
     <main>
-      <Card className='Card'>
+      <section>
         <h2>About the quiz</h2>
         <p>
           Macaroon gummi bears jujubes gummi bears halvah marshmallow wafer
@@ -32,7 +32,7 @@ export default function About() {
           wafer jujubes. Chupa chups candy I love chocolate bar. Biscuit powder
           biscuit I love soufflé marzipan I love.
         </p>
-      </Card>
+      </section>
     </main>
     </>
   );
