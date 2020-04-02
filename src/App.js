@@ -3,11 +3,12 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 import './styling/App.css';
 import './styling/Nav.css';
-import './styling/typography.css';
+
+
 
 import Header from './components/Header';
-import Nav from './components/Nav';
-// import Footer from './components/Footer';
+import Navigation from './components/Navigation';
+
 const Home = React.lazy(() => import('./components/Home'));
 const About = React.lazy(() => import('./components/About'));
 const Stats = React.lazy(() => import('./components/Stats'));
@@ -27,13 +28,13 @@ function App() {
         <Router>
           <Header onClickMenu={() => setOpenMenu(true)} />
           {openMenu ? (
-            <Nav OnClickMask={() => setOpenMenu(false)} isOpen={openMenu} />
+            <Navigation OnClickMask={() => setOpenMenu(false)} isOpen={openMenu} />
           ) : null}
 
           <Route exact path='/' component={Home} />
           <Route path='/about' component={About} />
           <Route path='/stats' component={Stats} />
-          {/* <Footer /> */}
+          
         </Router>
       </Suspense>
 

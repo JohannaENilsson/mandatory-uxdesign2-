@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import Button from 'react-bootstrap/Button';
 
-import {GetAPI} from '../actions/Funcs';
+import { GetAPI } from '../actions/Funcs';
 import Quiz from './Quiz';
 
 export default function Home() {
   const [apiData, handleApiData] = useState(null);
   const [isLoading, setLoading] = useState(false);
-  // console.log('load Doom');
-  
 
   function startGame() {
     handleApiData(null);
@@ -40,9 +37,9 @@ export default function Home() {
       <Helmet>{!apiData ? <title>Home</title> : <title>Quiz</title>}</Helmet>
       <main id='maincontent'>
         {!apiData ? (
-          <Button variant='info' onClick={startGame}>
+          <button id='startGame' onClick={startGame}>
             {isLoading ? 'Loading...' : 'Start quiz'}
-          </Button>
+          </button>
         ) : (
           <Quiz
             apiData={apiData}

@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-
 import PopUp from './PopUp';
 import { CheckAnswers } from '../actions/Funcs';
 import { entities, defaultValues } from '../actions/Utils';
@@ -47,7 +44,6 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
     console.log(score);
   };
 
-
   return (
     <>
       {showModal ? (
@@ -61,16 +57,21 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
       {trivia ? (
         <form onSubmit={handleSubmit(onSubmit)} aria-label='Quiz'>
           {trivia.map((question, idx) => {
-            const number = (idx + 1);
+            const number = idx + 1;
 
             const options = question.mixedOptions;
 
             return (
-              <Card key={idx} className='Card'>
+              <div
+                key={idx}
+                className='Card'
+                role='group'
+                aria-label='question container'
+              >
                 <fieldset aria-label={`question_head-${idx}`}>
                   <legend> Question {number} </legend>
-                  <h2 > 
-                  {/* id={`question_head-${idx}`} */}
+                  <h2>
+                    {/* id={`question_head-${idx}`} */}
                     {question.question.replace(
                       /&#?\w+;/g,
                       match => entities[match]
@@ -90,13 +91,13 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
                         <input
                           name={idx}
                           type='radio'
-                          id={`${idx}-${fixedOption}`}
+                          id={`${idx}${fixedOption}`}
                           value={option}
                           // aria-label={fixedOption}
                           aria-required='true'
                           ref={register({ required: true })}
                         />
-                        <label htmlFor={`${idx}-${fixedOption}`}>
+                        <label htmlFor={`${idx}${fixedOption}`}>
                           {fixedOption}
                         </label>
                       </React.Fragment>
@@ -104,12 +105,12 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
                     // }
                   })}
                 </fieldset>
-              </Card>
+              </div>
             );
           })}
-          <Button variant='info' type='submit' aria-label='submit quiz'>
+          <button id='startGame' type='submit' aria-label='submit quiz'>
             Submit
-          </Button>
+          </button>
         </form>
       ) : null}
     </>
