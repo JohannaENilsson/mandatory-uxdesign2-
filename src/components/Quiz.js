@@ -67,14 +67,15 @@ export default function Quiz({ apiData, restartGame, handleApiData }) {
 
             return (
               <Card key={idx} className='Card'>
-                <fieldset aria-labelledby={`question_head-${idx}`}>
-                  <h2> Question {number} </h2>
-                  <h3 id={`question_head-${idx}`}>
+                <fieldset aria-label={`question_head-${idx}`}>
+                  <legend> Question {number} </legend>
+                  <h2 > 
+                  {/* id={`question_head-${idx}`} */}
                     {question.question.replace(
                       /&#?\w+;/g,
                       match => entities[match]
                     )}
-                  </h3>
+                  </h2>
 
                   {options.map((option, index) => {
                     const uniqueKey = `${idx}${index}`;

@@ -13,14 +13,14 @@ export default function Nav({ OnClickMask }) {
     >
       <div id='demo-one-modal' className='modal' style={{ display: 'block' }}>
         <nav className='Nav' id='modal-body'>
-          <Link onClick={OnClickMask} to='/' id='demo-one-deactivate'>
-            Home
+          <Link onClick={OnClickMask} to='/' id='demo-one-deactivate' aria-label={'game'}>
+            Game
           </Link>
-          <Link onClick={OnClickMask} to='/stats'>
-            Stats
+          <Link onClick={OnClickMask} to='/stats' aria-label={'Game stats'}>
+            Game stats
           </Link>
-          <Link onClick={OnClickMask} to='about'>
-            About
+          <Link onClick={OnClickMask} to='about' aria-label={'About the game'}>
+            About the game
           </Link>
         </nav>
       </div>
